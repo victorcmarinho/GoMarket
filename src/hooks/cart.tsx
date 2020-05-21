@@ -18,7 +18,7 @@ interface Product {
 
 interface CartContext {
   products: Product[];
-  addToCart(item: Product): void;
+  addToCart(item: Omit<Product, 'quantity'>): void;
   increment(id: string): void;
   decrement(id: string): void;
 }
@@ -43,15 +43,14 @@ const CartProvider: React.FC = ({ children }) => {
   const addToCart = useCallback(async (product: any) => {
     const index = products.findIndex(p => p.id === product.id);
     if(index > -1) {
-      const newProducts = products;
-      newProducts[index].quantity  = ++newProducts[index].quantity;
-      setProducts([...newProducts])
+      products[index].quantity + 1;
+      setProducts(products)
     } else {
       product.quantity = 1;
       products.push(product)
       setProducts(products);
     }
-    await AsyncStorage.setItem('@GoMarketplace:cart', JSON.stringify(products));
+    await AsyncStorage.setItem('@GoMarketplace:cart', JSON.stringify([...products]));
 
   }, [products]);
 
@@ -68,9 +67,8 @@ const CartProvider: React.FC = ({ children }) => {
     if(products[index].quantity !== 1) {
       products[index].quantity = --products[index].quantity;
       setProducts([...products]);
-
-      await AsyncStorage.setItem('@GoMarketplace:cart', JSON.stringify(products));
     }
+    await AsyncStorage.setItem('@GoMarketplace:cart', JSON.stringify(products));
   }, [products]);
 
   const value = React.useMemo(
