@@ -1,5 +1,4 @@
 # GoMarket
-Este repositório é referente ao desafio 'CRUD React' do Bootcamp GoStack 11.0, da Rocketseat 🚀.
 
 
 # Resultado 🚀
