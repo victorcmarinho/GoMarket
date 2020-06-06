@@ -25,7 +25,7 @@ Siga os passos:
     yarn
     npm i -g json-server
     json-server server.json -p 3333
-    yarn start
+    yarn android
 
 ```
 Happy Hacking! 🚀
